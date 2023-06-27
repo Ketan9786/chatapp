@@ -47,50 +47,52 @@ function stringAvatar(name) {
 const Home = () => {
   const [data, setData] = useState([]);
   const [chat, setChat] = useState({ messae: "" });
-  const [messagetime,setMessagetime]=useState({ time: "" })
+  const [messagetime, setMessagetime] = useState({ time: "" })
   const [isPicker, setIspicker] = useState(false);
-  const [userName,setUserName]=useState("")
+  const [userName, setUserName] = useState("");
 
+  // handel send click
   const handelClick = () => {
-  
+
     if (chat.messae !== "") {
-   
-  
-      setData([...data, { ...chat,...messagetime,...userName}]);
+
+
+      setData([...data, { ...chat, ...messagetime, ...userName }]);
       console.log(data);
       setChat({ messae: "" });
-    
+
     }
   }
 
+  // get random item
   function getRandomItem(arr) {
 
     // get random index value
     const randomIndex = Math.floor(Math.random() * arr.length);
-  
+
     // get random item
     const item = arr[randomIndex];
-  
+
     return item;
   }
-  
- 
 
+
+  //Handel input change 
   const handelChange = (e) => {
     const array = ["Alan Sons", "Bob Mathis", "Carol Carnol ", "Dean Deshpande", "Elin Mask"];
-  
-  const result = getRandomItem(array);
- 
+
+    const result = getRandomItem(array);
 
 
-    let newmessagetime= new Date().toLocaleString('en-US', {
+
+    let newmessagetime = new Date().toLocaleString('en-US', {
       hour: 'numeric',
       minute: 'numeric',
       hour12: true
-   })
+    })
     setChat({ messae: e.target.value });
     setMessagetime({ time: newmessagetime });
-    setUserName({userName:result});
+    setUserName({ userName: result });
   }
   const onEmojiClick = (event, emojiObject) => {
     console.log(event.native)
@@ -114,7 +116,7 @@ const Home = () => {
               opacity: [0.9, 0.8, 0.7],
             }, */}
 
-
+            {/* header */}
             <div className='chatapp-header' >
               <div> This is Chat App</div>
               <div >
@@ -123,19 +125,20 @@ const Home = () => {
 
               </div>
             </div>
+            {/* header */}
 
-
+            {/* message  section  start */}
             <div className='message-card-box' >
-              {/* message  section  start */}
+
               {
                 data ? (<>
                   {
                     data.map((item, idx) => {
-                     
-                    console.log(idx+1);
+
+                      console.log(idx + 1);
                       return (
                         <>
-                          <div className='messagecard' key={idx+1} >
+                          <div className='messagecard' key={idx + 1} >
                             <Stack direction="row" spacing={2} style={{ marginTop: '15px' }} className='messagecard-header' >
                               <Avatar {...stringAvatar(item.userName)} />
 
@@ -170,21 +173,21 @@ const Home = () => {
 
 
             {/** Input area */}
-               
+
             <div className="input-box " >
-              <TextField id="outlined-basic" label="" variant="outlined" multiline fullWidth sx={{maxWidth:'400px'}}
+              <TextField id="outlined-basic" label="" variant="outlined" multiline fullWidth sx={{ maxWidth: '400px' }}
                 value={chat.messae} onChange={handelChange} />
-                <div className='input-btn'> <EmojiEmotionsIcon fontSize="small" color="warning" onClick={() => { setIspicker(!isPicker) }}/>
-              <SendIcon fontSize="small" onClick={handelClick} color="primary"  /></div>
+              <div className='input-btn'> <EmojiEmotionsIcon fontSize="small" color="warning" onClick={() => { setIspicker(!isPicker) }} />
+                <SendIcon fontSize="small" onClick={handelClick} color="primary" /></div>
 
-                <div className='emojicard'>
-              {isPicker && <Picker
-                pickerStyle={{ width: 'auto' }}
-                onEmojiSelect={onEmojiClick} />}
-                </div>
-</div>
+              <div className='emojicard'>
+                {isPicker && <Picker
+                  pickerStyle={{ width: 'auto' }}
+                  onEmojiSelect={onEmojiClick} />}
+              </div>
+            </div>
+    {/** Input area end here*/}
 
-           
           </Box>
         </Container>
       </React.Fragment>
